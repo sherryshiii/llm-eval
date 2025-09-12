@@ -11,7 +11,7 @@ Supports **single-prompt comparison**, **batch evaluation**, and **multi-dimensi
 
 ## Project Structure
 ```text
-llm_eval/
+llm-eval/
 ├── main.py # Application entry (Gradio)
 ├── config.py # Config loader, model filter, concurrency limits
 ├── llm.yaml # LLM platform & model config (see example below)
