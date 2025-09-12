@@ -206,7 +206,7 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 llm.yaml
-env
+.env
 logs/
 runtime/
 __pycache__/
@@ -217,3 +217,5 @@ __pycache__/
 .eggs/
 .venv/
 ipynb_checkpoints/
+.vscode/
+test/
