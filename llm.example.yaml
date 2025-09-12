@@ -1,0 +1,20 @@
+platforms:
+  openai:
+    name: "OpenAI"
+    url: "https://api.openai.com/v1"
+    api_key: "${OPENAI_API_KEY}"   # use Codespaces/Env var
+    concurrent: 4
+    models:
+      - showname: "GPT-4o Mini"
+        model: "gpt-4o-mini"
+        price: "medium"
+
+  volcengine:
+    name: "VolcEngine"
+    url: "https://samurai.volcengineapi.com"
+    api_key: "${VOLC_API_KEY}"
+    concurrent: 2
+    models:
+      - showname: "Skylark-Pro"
+        model: "skylark-pro"
+        price: "low"
