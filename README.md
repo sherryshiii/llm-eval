@@ -58,27 +58,28 @@ platforms:
   openai:
     name: "OpenAI"
     url: "https://api.openai.com/v1"
-    api_key: "${OPENAI_API_KEY}"   # supports environment variables
+    api_key: "${OPENAI_API_KEY}"   # from https://platform.openai.com/
     concurrent: 4
     models:
       - showname: "GPT-4o Mini"
         model: "gpt-4o-mini"
         price: "medium"
+      - showname: "GPT-4.1"
+        model: "gpt-4.1"
+        price: "high"
 
-  volcengine:
-    name: "VolcEngine"
-    url: "https://samurai.volcengineapi.com"
-    api_key: "${VOLC_API_KEY}"
+  gemini:
+    name: "Google Gemini"
+    url: "https://generativelanguage.googleapis.com/v1beta"
+    api_key: "${GEMINI_API_KEY}"   # from https://aistudio.google.com/
     concurrent: 2
     models:
-      - showname: "Skylark-Pro"
-        model: "skylark-pro"
-        price: "low"
-```
-You can also export environment variables before running:
-```bash
-export OPENAI_API_KEY=your_key
-export VOLC_API_KEY=your_key
+      - showname: "Gemini Pro"
+        model: "gemini-pro"
+        price: "free"
+      - showname: "Gemini Flash"
+        model: "gemini-1.5-flash"
+        price: "free"
 ```
 ### 4. Run
 ```bash
