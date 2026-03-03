@@ -1,0 +1,46 @@
+platforms:
+  volcengine:
+    name: "Volcengine"
+    url: "https://ark.cn-beijing.volces.com/api/v3/"
+    api_key: "${VOLCENGINE_API_KEY}"
+    concurrent: 5
+    models:
+      - showname: "doubao-1.5-lite"
+        model: "doubao-1-5-lite-32k-250115"
+        price: "low"
+      - showname: "deepseek-v3"
+        model: "deepseek-v3-250324"
+        price: "medium"
+
+  zhipu:
+    name: "Zhipu"
+    url: "https://open.bigmodel.cn/api/paas/v4/"
+    api_key: "${ZHIPU_API_KEY}"
+    concurrent: 3
+    models:
+      - showname: "glm-4-flash"
+        model: "glm-4-flash-250414"
+        price: "free"
+
+  aliyun:
+    name: "Alibaba DashScope"
+    url: "https://dashscope.aliyuncs.com/compatible-mode/v1/"
+    api_key: "${ALIYUN_API_KEY}"
+    concurrent: 2
+    models:
+      - showname: "qwen-turbo"
+        model: "qwen-turbo-latest"
+        price: "low"
+      - showname: "qwen-plus"
+        model: "qwen-plus-latest"
+        price: "low"
+
+  tencent:
+    name: "Tencent Hunyuan"
+    url: "https://api.hunyuan.cloud.tencent.com/v1/"
+    api_key: "${TENCENT_API_KEY}"
+    concurrent: 2
+    models:
+      - showname: "hunyuan-lite"
+        model: "hunyuan-lite"
+        price: "free"
