@@ -12,7 +12,9 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import httpx
 
+from app.core.config import ProviderConfig
 from app.core.types import ChatMessage, EvalResponse
+from app.providers.base import BaseProvider
 
 
 _JSON_INSTRUCTION = (
@@ -161,4 +163,30 @@ async def openai_chat(
         text=text,
         raw=data,
     )
+
+
+class OpenAICompatProvider(BaseProvider):
+    """Provider implementation for OpenAI-compatible chat APIs."""
+
+    def __init__(self, config: ProviderConfig):
+        # We keep the raw ProviderConfig so we can read base_url and api_key.
+        super().__init__(config)
+
+    async def chat(
+        self,
+        model: str,
+        messages: List[ChatMessage],
+        temperature: float,
+        response_format: str,
+    ) -> EvalResponse:
+        """Call an OpenAI-compatible `/chat/completions` endpoint."""
+        base_url = self.config.base_url or "https://api.openai.com/v1"
+        return await openai_chat(
+            base_url=base_url,
+            api_key=self.config.api_key,
+            model=model,
+            messages=messages,
+            temperature=temperature,
+            response_format=response_format,
+        )
 

@@ -18,8 +18,15 @@ as long as they expose an OpenAI-compatible chat endpoint.
 - `main.py` is the UI entry point (Gradio).
 - The UI creates `EvalRequest` objects.
 - `Runner` runs requests concurrently (with a per-provider semaphore).
-- `openai_provider.py` sends HTTP requests to `/chat/completions`.
+- `Runner` calls a provider client through `BaseProvider`.
+- `OpenAICompatProvider` (default) sends HTTP requests to `/chat/completions`.
 - Results and ratings are appended to `logs/requests.jsonl`.
+
+To add a new provider:
+
+- Create a new class that extends `BaseProvider` in `app/providers/`.
+- Implement the `chat()` method.
+- Register it in `Runner` (in `app/core/runner.py`) by checking `ProviderConfig.type`.
 
 ### Requirements
 

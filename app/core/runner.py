@@ -9,7 +9,8 @@ from typing import Dict, List, Tuple
 
 from app.core.config import ProviderConfig
 from app.core.types import EvalRequest, EvalResponse
-from app.providers.openai_provider import openai_chat
+from app.providers.base import BaseProvider
+from app.providers.openai_provider import OpenAICompatProvider
 
 
 class Runner:
@@ -22,14 +23,23 @@ class Runner:
         for k, v in providers.items():
             self.semaphores[k] = asyncio.Semaphore(max(1, int(v.concurrent)))
 
+        # Provider instances. Runner only talks to the BaseProvider interface.
+        self.clients = {}  # type: Dict[str, BaseProvider]
+        for name, cfg in providers.items():
+            # Keep it simple: default to OpenAI-compatible provider.
+            # Later you can add new types here (for platforms that are not fully compatible).
+            if (cfg.type or "openai_compat") == "openai_compat":
+                self.clients[name] = OpenAICompatProvider(cfg)
+            else:
+                self.clients[name] = OpenAICompatProvider(cfg)
+
     async def run_one(self, req: EvalRequest) -> EvalResponse:
         """Run a single request and return one response."""
         provider_name, model_id = req.model_key.split(":", 1)
         p = self.providers[provider_name]
         async with self.semaphores[provider_name]:
-            r = await openai_chat(
-                base_url=p.base_url or "https://api.openai.com/v1",
-                api_key=p.api_key,
+            client = self.clients[provider_name]
+            r = await client.chat(
                 model=model_id,
                 messages=req.messages,
                 temperature=req.temperature,
